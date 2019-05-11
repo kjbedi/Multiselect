@@ -6,7 +6,6 @@ export class Multiselect {
     constructor(elem, contents = []) {
         this.element = elem;
         this.contents = sanitizeInput(contents);
-        this.outputNodes = contents;
         this.init();
     }
 
@@ -40,7 +39,7 @@ export class Multiselect {
         checkbox.value = text;
         checkbox.checked = isSelected;
         checkbox.addEventListener('change', () => {
-            this.outputNodes[index].isSelected = checkbox.checked;
+            this.contents[index].isSelected = checkbox.checked;
             this.parseOutput();
          });
         return checkbox;
@@ -53,15 +52,19 @@ export class Multiselect {
     }
 
     parseOutput() {
-        const output = this.outputNodes.filter((content) => content.isSelected === true).map((content) => content.text)
-        if(this.changeFunc) {
-            this.changeFunc(output);
-        }
+        const output = this.contents.filter((content) => content.isSelected === true).map((content) => content.text)
+        return output;
     }
 
     onChange(func) {
         if(typeof func === 'function') {
-            this.changeFunc = func;
+            func(parseOutput());
+        } else {
+            console.error('Attach a callback function');
         }
+    }
+
+    getValues() {
+        return this.parseOutput();
     }
 }
