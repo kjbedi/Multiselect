@@ -24,7 +24,7 @@ if( config.get('uglify') ) {
 module.exports = {
     entry: './src/index.js',
     output: {
-        library: 'UserList',
+        library: 'Multiselect',
         libraryTarget: 'umd',
         libraryExport: 'default',
         path: path.resolve(__dirname, 'dist'),

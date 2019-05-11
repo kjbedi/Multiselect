@@ -1,9 +1,4 @@
-// import `.scss` files
 import './scss/styles.scss';
+import { Multiselect as defaultExport } from './lib/multiselect';
 
-// import UserList class
-import { UserList as defaultExport } from './lib/user-list';
-
-// export default UserList class
-// I used `defaultExport` to state that variable name doesn't matter
 export default defaultExport;
