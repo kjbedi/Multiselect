@@ -19,10 +19,11 @@
                     { text: 'Joey', isSelected: false },
                     { text: 'Geller', isSelected: false },
                 ]);
-                // instance.onChange((selected)=> {
-                //     console.log(selected);
-                // });
-                console.log(instance.getValues());
+                instance.onChange((selected)=> {
+                    console.log(selected);
+                });
+                instance.getSelectedValues()
+                console.log(instance.getSelectedValues());
             });
         </script>
     <script type="text/javascript" src="./index.js"></script></body>
