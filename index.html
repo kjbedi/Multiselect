@@ -3,7 +3,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>User Application</title>
+        <title>Vanilla multiselect demo</title>
     </head>
     <body>
         <div id="app"></div>
@@ -15,10 +15,13 @@
                 var elem = document.getElementById('app');
                 var instance = new Multiselect(elem, [
                     { text: 'Monica', isSelected: true },
-                    { text: 'Chandler', isSelected: false },
+                    { text: 'Chandler', isSelected: true },
                     { text: 'Joey', isSelected: false },
                     { text: 'Geller', isSelected: false },
                 ]);
+                instance.onChange((selected)=> {
+                    console.log(selected);
+                });
             });
         </script>
     </body>
