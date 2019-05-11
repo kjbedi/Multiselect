@@ -5,7 +5,8 @@ export class Multiselect {
     /// Param 2:- Takes the contents in a array of object format..
     constructor(elem, contents = []) {
         this.element = elem;
-        this.contents, this.outputNodes = sanitizeInput(contents);
+        this.contents = sanitizeInput(contents);
+        this.outputNodes = contents;
         this.init();
     }
 
@@ -59,6 +60,8 @@ export class Multiselect {
     }
 
     onChange(func) {
-        this.changeFunc = func;
+        if(typeof func === 'function') {
+            this.changeFunc = func;
+        }
     }
 }
