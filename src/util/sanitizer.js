@@ -1,5 +1,9 @@
+/**
+ * Function to sanitize input.
+ * @param {*} input Array of objects.
+ */
 export const sanitizeInput = (input) => {
-    const deepClonedInput = JSON.parse(JSON.stringify(input));
+    const deepClonedInput = [...input];
     if(Array.isArray(deepClonedInput) && checkValidInput(deepClonedInput)) {
         return deepClonedInput;
     }

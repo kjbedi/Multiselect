@@ -1,20 +1,35 @@
 import { sanitizeInput } from '../util/sanitizer';
 
 export class Multiselect {
-    /// Param 1:- Takes the dom element within which the plugin will render elements.
-    /// Param 2:- Takes the contents in a array of object format..
+    /**
+     * Constructor
+     * @param {*} elem Takes the dom element within which the plugin will render elements.
+     * @param {*} contents Takes the contents in an array of objects format E.g.
+     * [
+                    { text: 'Monica', isSelected: true },
+                    { text: 'Chandler', isSelected: true },
+                    { text: 'Joey', isSelected: false },
+                    { text: 'Geller', isSelected: false },
+                ]
+     */
     constructor(elem, contents = []) {
         this.element = elem;
         this.contents = sanitizeInput(contents);
         this.init();
     }
 
+    /**
+     * Create ul elements and render all li elements.
+     */
     init() {
-        let ul = document.createElement( 'ul' );
-        this.ul = this.element.appendChild( ul );
+        let ul = document.createElement('ul');
+        this.ul = this.element.appendChild(ul);
         this.renderList();
     }
 
+    /**
+     * Function to render li lists.
+     */
     renderList() {
         let liElements = this.contents.map((content, index) => this.getLi(content.text, content.isSelected, index));
         for( let li of liElements ){
@@ -28,19 +43,18 @@ export class Multiselect {
 
     getLi(text, isSelected, index) {
         let li = document.createElement('li');
-        li.appendChild(this.getCheckBox(text, isSelected, index));
+        li.appendChild(this.getCheckBox(isSelected, index));
         li.appendChild(this.getContainerText(text));
         return li;
     }
 
-    getCheckBox(text, isSelected, index) {
+    getCheckBox(isSelected, index) {
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
-        checkbox.value = text;
         checkbox.checked = isSelected;
         checkbox.addEventListener('change', () => {
             this.contents[index].isSelected = checkbox.checked;
-            this.parseOutput();
+            this.changeFunc(this.parseOutput())
          });
         return checkbox;
     }
@@ -56,15 +70,20 @@ export class Multiselect {
         return output;
     }
 
+    /**
+     * onChange callback to get checkbox change events
+     * @param {*} func
+     */
     onChange(func) {
         if(typeof func === 'function') {
-            func(parseOutput());
-        } else {
-            console.error('Attach a callback function');
+            this.changeFunc = func;
         }
     }
 
-    getValues() {
+    /**
+     * Function to get current selected values
+     */
+    getSelectedValues() {
         return this.parseOutput();
     }
 }
